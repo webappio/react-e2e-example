@@ -1,38 +1,37 @@
 .App {
-  text-align: center;
+    height: 100vh;
+    width: 100vw;
+    background: #75ff98;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cypress-logo {
+    width: 1em;
+    height: auto;
+    margin-right: 0.25em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    margin: 2em 4em;
+    font-size: 2em;
+    background-color: #75ff98;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 100%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-tagline {
+    display: flex;
+    justify-content: center;
+    font-size: 4rem;
 }
