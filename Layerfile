@@ -1,0 +1,21 @@
+FROM vm/ubuntu:18.04
+    
+# To note: Layerfiles create entire VMs, *not* containers!    
+RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
+    apt-get install nodejs python3 make gcc build-essential && \
+    rm -f /etc/apt/sources.list.d/nodesource.list
+
+# node is a memory hog
+MEMORY 2G
+ENV NODE_OPTIONS=--max-old-space-size=8192
+    
+COPY . .
+RUN mkdir cypress
+RUN npm install
+RUN BACKGROUND npm start
+RUN BACKGROUND cd cypress && python3 -m http.server 8000
+
+RUN ./node_modules/.bin/cypress run
+
+# start a webserver to view test results
+EXPOSE WEBSITE http://localhost:8000
