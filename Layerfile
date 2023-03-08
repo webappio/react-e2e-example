@@ -1,22 +1,22 @@
+#This is an example webapp.io configuration for Docker!
 FROM vm/ubuntu:18.04
-    
-# To note: Layerfiles create entire VMs, *not* containers!    
-RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
-    apt-get install nodejs python3 make gcc build-essential \
-    libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb && \
-    rm -f /etc/apt/sources.list.d/nodesource.list
 
-# node is a memory hog
-MEMORY 2G
-ENV NODE_OPTIONS=--max-old-space-size=8192
-    
+# To note: Layerfiles create entire VMs, *not* containers!
+
+# install the latest version of Docker, as in the official Docker installation tutorial.
+RUN apt-get update && \
+    apt-get install ca-certificates curl gnupg lsb-release && \
+    sudo mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" |\
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
+    apt-get install docker-ce docker-ce-cli containerd.io
+
+# copy files from the repository into this staging server
 COPY . .
-RUN mkdir cypress
-RUN npm install
-RUN BACKGROUND npm start
-RUN BACKGROUND cd cypress && python3 -m http.server 8000
 
-RUN ./node_modules/.bin/cypress run
-
-# start a webserver to view test results
-EXPOSE WEBSITE http://localhost:8000
+RUN docker build -t image .
+RUN docker run -d -p 80:80 image
+EXPOSE WEBSITE http://localhost:80
