@@ -29,4 +29,4 @@ RUN echo "$DOCKER_LOGIN" | docker login --username "theophige" --password-stdin
 # RUN docker-compose up -d
 
 # TODO: change port to whatever is configured in your docker-compose.yml
-EXPOSE WEBSITE localhost:8000
+# EXPOSE WEBSITE localhost:8000
