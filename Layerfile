@@ -21,6 +21,10 @@ COPY / /root
 # TODO: log in to docker hub
 # See https://webapp.io/docs/advanced-workflows#logging-in-to-docker to learn how to log in to docker
 
+SECRET ENV DOCKER_LOGIN
+RUN echo "$DOCKER_LOGIN" | docker login --username "theophige" --password-stdin
+
+
 RUN REPEATABLE docker-compose build --parallel
 RUN docker-compose up -d
 
